@@ -14,6 +14,9 @@ def create_journal(filepath):
     username = input('Enter the Username: ')
     password = input("Enter the password: ")
     bio = input("Enter bio: ")
+    if Path(filepath).exists():
+        print("File exists and will now be opened")
+        open_journal(filepath)
     file_name = Path(filepath).open('w')
     profile = Profile(username,password,bio)
     profile.save_profile(filepath)
