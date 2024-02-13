@@ -10,7 +10,7 @@
 from pathlib import Path
 from Profile import Profile
 
-def create_journal(filepath):
+def create_journal(filepath):   #creating the journal and adding the inputs
     username = input('Enter the Username: ')
     password = input("Enter the password: ")
     bio = input("Enter bio: ")
@@ -36,7 +36,7 @@ def read_file(myPath):        #reading the contents of a file
     except Exception as e:
         print(f"Error reading file: {e}")
 
-def open_journal(filepath):
+def open_journal(filepath):   #opening the journal with the option to view its contents
     profile = Profile()
     a = input("Do you want to see file content Y/N")
     if a == 'Y':
@@ -47,7 +47,7 @@ def open_journal(filepath):
     else:
         print("Invalid file format")
 
-def edit_journal(profile, option, open_path):
+def edit_journal(profile, option, open_path):  #editing the contents of the journal based on the user input
     if "-usr" in option:
         username = option["-usr"]
         profile.username = username
@@ -65,7 +65,7 @@ def edit_journal(profile, option, open_path):
         profile.delete_post(post_id)
     profile.save_profile(open_path)
 
-def print_journal(profile, option):
+def print_journal(profile, option):  #printing the contents of the journal that the user requests
     if "-usr" in option:
         print("Username: ", profile.username)
     if "-pwd" in option:
@@ -90,7 +90,7 @@ def print_journal(profile, option):
         for i, post in enumerate(profile.posts):
             print(f"ID: {i+1}, Content: {post}")
 
-def admin():
+def admin():    #admin function if the user doesn't want heavy interface
     while True:
         admin_input = input()
         admin_input = admin_input.split(" ")
@@ -115,7 +115,7 @@ def admin():
         elif admin_input =='' or admin_input == ' ':
             break
 
-def user_interface():
+def user_interface():   #interface for uses who want it 
     while True:
         try:
             command = input('''Welcome! Do you want to create or open a DSU file (type 'C' to create, 'O' to open,
@@ -123,20 +123,20 @@ def user_interface():
                             type 'admin' for self user input with no prompt :
                             type 'Q' to quit''')
 
-            if command == 'C':
+            if command == 'C':   #create command 
                 create_path = input("Amazing!, What is the name of the file you want to create ")
                 create_journal(create_path)
-            elif command == 'O':
+            elif command == 'O':  #open command
                 open_path = input("Cool!, Which file would you like to open ")
                 profile = open_journal(open_path)
-            elif command == 'E':
+            elif command == 'E':  #editing command
                 keyword = input("Enter the control for what you want to edit ")
                 list_keyword = keyword.split(" ")
                 option = {} 
                 for i in range(0, len(list_keyword), 2):
                     option[list_keyword[i]] = list_keyword[i+1]
                 edit_journal(profile, option, open_path)
-            elif command == 'P':
+            elif command == 'P':    #printing command
                 keyword = input("Enter the control for what you want to output ")
                 list_keyword = keyword.split(" ")
                 option = {} 
@@ -145,12 +145,12 @@ def user_interface():
                     list_keyword = list_keyword.strip('/"')
                     option[list_keyword[i]] = list_keyword[i+1]
                 print_journal(profile, option)
-            elif command == "Q":
+            elif command == "Q":   #to quit the program
                 print("Hope you have completed what you wanted to, Bye!")
-                break
-            elif command == "admin":
+                break 
+            elif command == "admin":   #to go into admin mode
                 admin()
-            else:
+            else:  #if command inputed was incorrect
                 print("Incorrect command, Please type again")
-        except TypeError:
+        except TypeError:  #if the type entered was not string
             raise Exception("You have used the wrong datatype, Only string is excpeted")
