@@ -90,6 +90,30 @@ def print_journal(profile, option):
         for i, post in enumerate(profile.posts):
             print(f"ID: {i+1}, Content: {post}")
 
+def admin():
+    while True:
+        admin_input = input()
+        admin_input = admin_input.split(" ")
+        if len(admin_input) == 4 and admin_input[0] == 'C' and admin_input[2] == '-n':
+            Path_init = Path(admin_input[1]) / (admin_input[3] + ".dsu")
+            create_journal(Path_init)
+        elif len(admin_input) == 2 and admin_input[0] =='O':
+            open_path = admin_input[1]
+            profile_enclosed = open_journal(open_path)
+        elif admin_input[0] == 'E':
+            option = {} 
+            for i in range(1, len(admin_input), 2):
+                    option[admin_input[i]] = admin_input[i+1]
+            edit_journal(profile_enclosed, option, open_path)
+        elif admin_input[0] == 'P':
+            option = {} 
+            for i in range(1, len(admin_input), 2):
+                    option[admin_input[i]] = admin_input[i+1]
+            print_journal(profile_enclosed, option)
+        elif admin_input == ['Q']:
+            break
+        elif admin_input =='' or admin_input == ' ':
+            break
 
 def user_interface():
     while True:
@@ -124,6 +148,8 @@ def user_interface():
             elif command == "Q":
                 print("Hope you have completed what you wanted to, Bye!")
                 break
+            elif command == "admin":
+                admin()
             else:
                 print("Incorrect command, Please type again")
         except TypeError:
