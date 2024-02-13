@@ -19,6 +19,20 @@ def create_journal(filepath):
     profile.save_profile(filepath)
     file_name.close()
 
+
+def read_file(myPath):        #reading the contents of a file 
+    try:
+        with myPath.open('r') as my_file:
+            data = my_file.read()
+            if not data:
+                print("EMPTY")
+            else:
+                print(data)
+    except FileNotFoundError:
+        print(f"File not found: {myPath}")
+    except Exception as e:
+        print(f"Error reading file: {e}")
+
 def open_journal(filepath):
     profile = Profile()
     a = input("Do you want to see file content Y/N")
@@ -28,7 +42,7 @@ def open_journal(filepath):
         profile.load_profile(filepath)
         return profile
     else:
-        print("Inalid file format")
+        print("Invalid file format")
 
 def edit_journal(profile, option, open_path):
     if "-usr" in option:
