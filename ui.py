@@ -19,6 +19,16 @@ def create_journal(filepath):
     profile.save_profile(filepath)
     file_name.close()
 
+def open_journal(filepath):
+    profile = Profile()
+    a = input("Do you want to see file content Y/N")
+    if a == 'Y':
+        read_file(Path(filepath))
+    if filepath[-4::1] == ".dsu":
+        profile.load_profile(filepath)
+        return profile
+    else:
+        print("Inalid file format")
 
 def user_interface():
     while True:
@@ -31,6 +41,9 @@ def user_interface():
             if command == 'C':
                 create_path = input("Amazing!, What is the name of the file you want to create ")
                 create_journal(create_path)
+            elif command == 'O':
+                open_path = input("Cool!, Which file would you like to open ")
+                profile = open_journal(open_path)
             elif command == "Q":
                 print("Hope you have completed what you wanted to, Bye!")
                 break
